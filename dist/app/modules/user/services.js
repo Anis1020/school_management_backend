@@ -18,28 +18,34 @@ const schemaModel_1 = require("../admin/schemaModel");
 const schemaModel_2 = require("../faculty/schemaModel");
 const schemaModel_3 = require("../student/schemaModel");
 const schemaModel_4 = require("./schemaModel");
+const schemaModel_5 = require("../semester/schemaModel");
+const user_utils_1 = require("./user.utils");
 // import { UserModel } from "./schemaModel";
 const createStudentIntoDB = (password, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const userData = {};
-    userData.password = password || "pass123";
-    userData.role = "student";
-    userData.id = "student1";
-    const startSession = yield mongoose_1.default.startSession();
+    const session = yield mongoose_1.default.startSession();
+    session.startTransaction();
+    const admissionSemester = yield schemaModel_5.SemesterModel.findById(payload.academicSemester); //, {}, { session }
+    if (!admissionSemester) {
+        throw new Error("Admission semester not found");
+    }
     try {
-        startSession.startTransaction();
-        const newUser = yield schemaModel_4.UserModel.create([userData], { startSession });
+        const userData = {};
+        userData.password = password || "pass123";
+        userData.role = "student";
+        userData.id = (yield (0, user_utils_1.generatedID)(admissionSemester)) || "student1"; // Use payload.id if available, or generate one
+        const newUser = yield schemaModel_4.UserModel.create([userData], { session });
         payload.id = newUser[0].id;
+        // Only assign payload.user if your schema supports it
         payload.user = newUser[0]._id;
-        // payload.email=newUser.email
-        const result = yield schemaModel_3.StudentModel.create([payload], { startSession });
-        yield startSession.commitTransaction();
-        yield startSession.endSession();
-        return result;
+        const newStudent = yield schemaModel_3.StudentModel.create([payload], { session });
+        yield session.commitTransaction();
+        session.endSession();
+        return newStudent[0];
     }
     catch (error) {
-        yield startSession.abortTransaction();
-        yield startSession.endSession();
-        throw new Error("Fail to create user and student");
+        yield session.abortTransaction();
+        session.endSession();
+        throw new Error("fail to create user and student: " + error.message);
     }
 });
 //create faculty

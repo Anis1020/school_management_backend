@@ -15,6 +15,11 @@ const createSemesterIntoDB = (payload) => __awaiter(void 0, void 0, void 0, func
     const result = yield schemaModel_1.SemesterModel.create(payload);
     return result;
 });
+const getAllSemesterIntoDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield schemaModel_1.SemesterModel.find();
+    return result;
+});
 exports.SemesterServices = {
     createSemesterIntoDB,
+    getAllSemesterIntoDB,
 };

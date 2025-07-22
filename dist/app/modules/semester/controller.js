@@ -23,6 +23,15 @@ const createSemester = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         data: result,
     });
 }));
+const getAllSemester = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield services_1.SemesterServices.getAllSemesterIntoDB();
+    res.status(200).json({
+        success: true,
+        message: "Semester is created successfully",
+        data: result,
+    });
+}));
 exports.SemesterController = {
     createSemester,
+    getAllSemester,
 };

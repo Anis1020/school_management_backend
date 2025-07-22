@@ -7,28 +7,41 @@ import { TStudent } from "../student/interface";
 import { StudentModel } from "../student/schemaModel";
 import { TUser } from "./interface";
 import { UserModel } from "./schemaModel";
+import { SemesterModel } from "../semester/schemaModel";
+import { generatedID } from "./user.utils";
+
 // import { UserModel } from "./schemaModel";
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
-  const userData: Partial<TUser> = {};
-  userData.password = password || "pass123";
-  userData.role = "student";
-  userData.id = "student1";
-  const startSession = await mongoose.startSession();
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  const admissionSemester = await SemesterModel.findById(
+    payload.academicSemester
+  ); //, {}, { session }
+  if (!admissionSemester) {
+    throw new Error("Admission semester not found");
+  }
   try {
-    startSession.startTransaction();
-    const newUser = await UserModel.create([userData], { startSession });
+    const userData: Partial<TUser> = {};
+    userData.password = password || "pass123";
+    userData.role = "student";
+    userData.id = (await generatedID(admissionSemester)) || "student1"; // Use payload.id if available, or generate one
+
+    const newUser = await UserModel.create([userData], { session });
     payload.id = newUser[0].id;
+    // Only assign payload.user if your schema supports it
     payload.user = newUser[0]._id;
-    // payload.email=newUser.email
-    const result = await StudentModel.create([payload], { startSession });
-    await startSession.commitTransaction();
-    await startSession.endSession();
-    return result;
+    const newStudent = await StudentModel.create([payload], { session });
+    await session.commitTransaction();
+    session.endSession();
+    return newStudent[0];
   } catch (error) {
-    await startSession.abortTransaction();
-    await startSession.endSession();
-    throw new Error("Fail to create user and student");
+    await session.abortTransaction();
+    session.endSession();
+    throw new Error(
+      "fail to create user and student: " + (error as Error).message
+    );
   }
 };
 
