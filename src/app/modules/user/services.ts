@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { TAdmin } from "../admin/interface";
 import { AdminModel } from "../admin/schemaModel";
 import { TFaculty } from "../faculty/interface";
@@ -13,15 +14,25 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
   userData.password = password || "pass123";
   userData.role = "student";
   userData.id = "student1";
-  const newUser = await UserModel.create(userData);
-  payload.id = newUser.id;
-  payload.user = newUser._id;
-  // payload.email=newUser.email
-  const result = await StudentModel.create(payload);
-  return result;
+  const startSession = await mongoose.startSession();
+  try {
+    startSession.startTransaction();
+    const newUser = await UserModel.create([userData], { startSession });
+    payload.id = newUser[0].id;
+    payload.user = newUser[0]._id;
+    // payload.email=newUser.email
+    const result = await StudentModel.create([payload], { startSession });
+    await startSession.commitTransaction();
+    await startSession.endSession();
+    return result;
+  } catch (error) {
+    await startSession.abortTransaction();
+    await startSession.endSession();
+    throw new Error("Fail to create user and student");
+  }
 };
 
-//TODO
+//create faculty
 const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   const userData: Partial<TUser> = {};
   userData.password = password || "faculty123";
@@ -35,6 +46,7 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   return result;
 };
 
+//create admin
 const createAdminIntoDB = async (password: string, payload: TAdmin) => {
   const userData: Partial<TUser> = {};
   userData.password = password || "admin123";
