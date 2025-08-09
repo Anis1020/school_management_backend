@@ -1,54 +1,66 @@
 import catchAsync from "../../utils/catchAsync";
-import { CourseServices } from "./services";
+import { SemesterRegistrationServices } from "./services";
 
-const createCourse = catchAsync(async (req, res) => {
-  const result = await CourseServices.createCourseIntoDB(req.body);
+const createSemesterRegistration = catchAsync(async (req, res) => {
+  const result =
+    await SemesterRegistrationServices.createSemesterRegistrationIntoDB(
+      req.body
+    );
   res.status(200).json({
     success: true,
-    message: "Create Course successfully",
+    message: "Create SemesterRegistration successfully",
     data: result,
   });
 });
-const getAllCourse = catchAsync(async (req, res) => {
-  const result = await CourseServices.getAllCourseFromDB(req.query);
+const getAllSemesterRegistration = catchAsync(async (req, res) => {
+  const result =
+    await SemesterRegistrationServices.getAllSemesterRegistrationFromDB(
+      req.query
+    );
   res.status(200).json({
     success: true,
-    message: "get all Course successfully",
+    message: "get all SemesterRegistration successfully",
     data: result,
   });
 });
-const getSingleCourse = catchAsync(async (req, res) => {
+const getSingleSemesterRegistration = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await CourseServices.getSingleCourseFromDB(id);
+  const result =
+    await SemesterRegistrationServices.getSingleSemesterRegistrationFromDB(id);
   res.status(200).json({
     success: true,
-    message: "get all Course successfully",
+    message: "get all SemesterRegistration successfully",
     data: result,
   });
 });
-const updateCourse = catchAsync(async (req, res) => {
+const updateSemesterRegistration = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await CourseServices.updateCourseFromDB(id, req.body);
+  const result =
+    await SemesterRegistrationServices.updateSemesterRegistrationFromDB(
+      id,
+      req.body
+    );
   res.status(200).json({
     success: true,
-    message: "get all Course successfully",
+    message: "get all SemesterRegistration successfully",
     data: result,
   });
 });
-const deleteCourse = catchAsync(async (req, res) => {
+const deleteSemesterRegistration = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await CourseServices.deleteCourseFromDB(id);
+  const result =
+    await SemesterRegistrationServices.deleteSemesterRegistrationFromDB(id);
   res.status(200).json({
     success: true,
-    message: "get all Course successfully",
+    message: "get all SemesterRegistration successfully",
     data: result,
   });
 });
 
-export const CourseController = {
-  createCourse,
-  getAllCourse,
-  getSingleCourse,
-  updateCourse,
-  deleteCourse,
+export const SemesterRegistrationController = {
+  createSemesterRegistration,
+  getAllSemesterRegistration,
+  getSingleSemesterRegistration,
+  updateSemesterRegistration,
+  deleteSemesterRegistration,
 };

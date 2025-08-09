@@ -1,54 +1,61 @@
 import catchAsync from "../../utils/catchAsync";
-import { CourseServices } from "./services";
+import { OfferedCourseServices } from "./services";
 
-const createCourse = catchAsync(async (req, res) => {
-  const result = await CourseServices.createCourseIntoDB(req.body);
+const createOfferedCourse = catchAsync(async (req, res) => {
+  const result = await OfferedCourseServices.createOfferedCourseIntoDB(
+    req.body
+  );
   res.status(200).json({
     success: true,
-    message: "Create Course successfully",
+    message: "Create OfferedCourse successfully",
     data: result,
   });
 });
-const getAllCourse = catchAsync(async (req, res) => {
-  const result = await CourseServices.getAllCourseFromDB(req.query);
+const getAllOfferedCourse = catchAsync(async (req, res) => {
+  const result = await OfferedCourseServices.getAllOfferedCourseFromDB(
+    req.query
+  );
   res.status(200).json({
     success: true,
-    message: "get all Course successfully",
+    message: "get all OfferedCourse successfully",
     data: result,
   });
 });
-const getSingleCourse = catchAsync(async (req, res) => {
+const getSingleOfferedCourse = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await CourseServices.getSingleCourseFromDB(id);
+  const result = await OfferedCourseServices.getSingleOfferedCourseFromDB(id);
   res.status(200).json({
     success: true,
-    message: "get all Course successfully",
+    message: "get all OfferedCourse successfully",
     data: result,
   });
 });
-const updateCourse = catchAsync(async (req, res) => {
+const updateOfferedCourse = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await CourseServices.updateCourseFromDB(id, req.body);
+  const result = await OfferedCourseServices.updateOfferedCourseFromDB(
+    id,
+    req.body
+  );
   res.status(200).json({
     success: true,
-    message: "get all Course successfully",
+    message: "get all OfferedCourse successfully",
     data: result,
   });
 });
-const deleteCourse = catchAsync(async (req, res) => {
+const deleteOfferedCourse = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await CourseServices.deleteCourseFromDB(id);
+  const result = await OfferedCourseServices.deleteOfferedCourseFromDB(id);
   res.status(200).json({
     success: true,
-    message: "get all Course successfully",
+    message: "get all OfferedCourse successfully",
     data: result,
   });
 });
 
-export const CourseController = {
-  createCourse,
-  getAllCourse,
-  getSingleCourse,
-  updateCourse,
-  deleteCourse,
+export const OfferedCourseController = {
+  createOfferedCourse,
+  getAllOfferedCourse,
+  getSingleOfferedCourse,
+  updateOfferedCourse,
+  deleteOfferedCourse,
 };

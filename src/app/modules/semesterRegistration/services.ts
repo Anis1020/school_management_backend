@@ -1,32 +1,39 @@
-import { TCourse } from "./interface";
-import { CourseModel } from "./schemaModel";
+import { TSemesterRegistration } from "./interface";
+import { SemesterRegistrationModel } from "./schemaModel";
 
-const createCourseIntoDB = async (payload: TCourse) => {
-  const result = await CourseModel.create(payload);
-  return result;
-};
-
-const getAllCourseFromDB = async (query: Record<string, unknown>) => {
-  const result = await CourseModel.findByIdAndUpdate(query);
-  return result;
-};
-const getSingleCourseFromDB = async (id: string) => {
-  const result = await CourseModel.findByIdAndUpdate(id);
-  return result;
-};
-const updateCourseFromDB = async (id: string, payload: Partial<TCourse>) => {
-  const result = await CourseModel.findByIdAndUpdate(id);
-  return result;
-};
-const deleteCourseFromDB = async (id: string) => {
-  const result = await CourseModel.findByIdAndUpdate(id);
+const createSemesterRegistrationIntoDB = async (
+  payload: TSemesterRegistration
+) => {
+  const result = await SemesterRegistrationModel.create(payload);
   return result;
 };
 
-export const CourseServices = {
-  createCourseIntoDB,
-  getAllCourseFromDB,
-  getSingleCourseFromDB,
-  updateCourseFromDB,
-  deleteCourseFromDB,
+const getAllSemesterRegistrationFromDB = async (
+  query: Record<string, unknown>
+) => {
+  const result = await SemesterRegistrationModel.findByIdAndUpdate(query);
+  return result;
+};
+const getSingleSemesterRegistrationFromDB = async (id: string) => {
+  const result = await SemesterRegistrationModel.findByIdAndUpdate(id);
+  return result;
+};
+const updateSemesterRegistrationFromDB = async (
+  id: string,
+  payload: Partial<TSemesterRegistration>
+) => {
+  const result = await SemesterRegistrationModel.findByIdAndUpdate(id);
+  return result;
+};
+const deleteSemesterRegistrationFromDB = async (id: string) => {
+  const result = await SemesterRegistrationModel.findByIdAndUpdate(id);
+  return result;
+};
+
+export const SemesterRegistrationServices = {
+  createSemesterRegistrationIntoDB,
+  getAllSemesterRegistrationFromDB,
+  getSingleSemesterRegistrationFromDB,
+  updateSemesterRegistrationFromDB,
+  deleteSemesterRegistrationFromDB,
 };

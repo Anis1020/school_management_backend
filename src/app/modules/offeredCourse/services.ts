@@ -1,32 +1,35 @@
-import { TCourse } from "./interface";
-import { CourseModel } from "./schemaModel";
+import { TOfferedCourse } from "./interface";
+import { OfferedCourseModel } from "./schemaModel";
 
-const createCourseIntoDB = async (payload: TCourse) => {
-  const result = await CourseModel.create(payload);
-  return result;
-};
-
-const getAllCourseFromDB = async (query: Record<string, unknown>) => {
-  const result = await CourseModel.findByIdAndUpdate(query);
-  return result;
-};
-const getSingleCourseFromDB = async (id: string) => {
-  const result = await CourseModel.findByIdAndUpdate(id);
-  return result;
-};
-const updateCourseFromDB = async (id: string, payload: Partial<TCourse>) => {
-  const result = await CourseModel.findByIdAndUpdate(id);
-  return result;
-};
-const deleteCourseFromDB = async (id: string) => {
-  const result = await CourseModel.findByIdAndUpdate(id);
+const createOfferedCourseIntoDB = async (payload: TOfferedCourse) => {
+  const result = await OfferedCourseModel.create(payload);
   return result;
 };
 
-export const CourseServices = {
-  createCourseIntoDB,
-  getAllCourseFromDB,
-  getSingleCourseFromDB,
-  updateCourseFromDB,
-  deleteCourseFromDB,
+const getAllOfferedCourseFromDB = async (query: Record<string, unknown>) => {
+  const result = await OfferedCourseModel.findByIdAndUpdate(query);
+  return result;
+};
+const getSingleOfferedCourseFromDB = async (id: string) => {
+  const result = await OfferedCourseModel.findByIdAndUpdate(id);
+  return result;
+};
+const updateOfferedCourseFromDB = async (
+  id: string,
+  payload: Partial<TOfferedCourse>
+) => {
+  const result = await OfferedCourseModel.findByIdAndUpdate(id);
+  return result;
+};
+const deleteOfferedCourseFromDB = async (id: string) => {
+  const result = await OfferedCourseModel.findByIdAndUpdate(id);
+  return result;
+};
+
+export const OfferedCourseServices = {
+  createOfferedCourseIntoDB,
+  getAllOfferedCourseFromDB,
+  getSingleOfferedCourseFromDB,
+  updateOfferedCourseFromDB,
+  deleteOfferedCourseFromDB,
 };

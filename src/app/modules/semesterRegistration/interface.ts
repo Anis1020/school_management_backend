@@ -1,1 +1,1 @@
-export type TCourse = {};
+export type TSemesterRegistration = {};

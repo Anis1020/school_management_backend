@@ -1,9 +1,9 @@
 import z from "zod";
 
-const createCourseValidationSchema = z.object({});
-const updateCourseValidationSchema = z.object({});
+const createOfferedCourseValidationSchema = z.object({});
+const updateOfferedCourseValidationSchema = z.object({});
 
 export const AcademicSemesterValidations = {
-  createCourseValidationSchema,
-  updateCourseValidationSchema,
+  createOfferedCourseValidationSchema,
+  updateOfferedCourseValidationSchema,
 };
