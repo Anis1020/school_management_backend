@@ -14,7 +14,7 @@ const updateStudentFromDB = async (id: string, payload: Partial<TStudent>) => {
   return result;
 };
 const deleteStudentFromDB = async (id: string) => {
-  const result = await StudentModel.findByIdAndUpdate(id);
+  const result = await StudentModel.findByIdAndUpdate(id, { isDeleted: true });
   return result;
 };
 
