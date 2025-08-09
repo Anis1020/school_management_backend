@@ -24,7 +24,7 @@ const updateStudentFromDB = (id, payload) => __awaiter(void 0, void 0, void 0, f
     return result;
 });
 const deleteStudentFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield schemaModel_1.StudentModel.findByIdAndUpdate(id);
+    const result = yield schemaModel_1.StudentModel.findByIdAndUpdate(id, { isDeleted: true });
     return result;
 });
 exports.StudentServices = {

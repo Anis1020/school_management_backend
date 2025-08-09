@@ -2,5 +2,43 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentModel = void 0;
 const mongoose_1 = require("mongoose");
-const studentSchema = new mongoose_1.Schema({});
-exports.StudentModel = (0, mongoose_1.model)("Student", studentSchema);
+// Name sub-schema
+const NameSchema = new mongoose_1.Schema({
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+});
+// Guardian sub-schema
+const GuardianSchema = new mongoose_1.Schema({
+    name: { type: String, required: true },
+    relation: { type: String, required: true },
+    occupation: { type: String, required: true },
+});
+// Student schema
+const StudentSchema = new mongoose_1.Schema({
+    id: { type: String, required: true, unique: true, trim: true },
+    user: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+        trim: true,
+    },
+    name: { type: NameSchema, required: true, trim: true },
+    gender: {
+        type: String,
+        enum: ["male", "female", "other"],
+        required: true,
+        trim: true,
+    },
+    dateOfBirth: { type: String, required: true, trim: true },
+    email: { type: String, required: true, unique: true, trim: true },
+    contactNo: { type: String, required: true, trim: true },
+    presentAddress: { type: String, required: true, trim: true },
+    permanentAddress: { type: String, required: true, trim: true },
+    guardian: { type: GuardianSchema, required: true, trim: true },
+    localGuardian: { type: GuardianSchema, required: true, trim: true },
+    profileImg: { type: String },
+}, {
+    timestamps: true,
+});
+// Model
+exports.StudentModel = (0, mongoose_1.model)("Student", StudentSchema);

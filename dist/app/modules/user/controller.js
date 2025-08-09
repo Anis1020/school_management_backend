@@ -14,8 +14,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
-const createStudent = (0, catchAsync_1.default)(() => __awaiter(void 0, void 0, void 0, function* () { }));
-const createFaculty = (0, catchAsync_1.default)(() => __awaiter(void 0, void 0, void 0, function* () { }));
+const services_1 = require("./services");
+const createStudent = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield services_1.UserServices.createStudentIntoDB(req.body.student);
+    res.status(200).json({
+        success: true,
+        message: "Student create successfully",
+        data: result,
+    });
+}));
+const createFaculty = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield services_1.UserServices.createStudentIntoDB(req.body);
+    res.status(200).json({
+        success: true,
+        message: "Faculty  create successfully",
+        data: result,
+    });
+}));
 const createAdmin = (0, catchAsync_1.default)(() => __awaiter(void 0, void 0, void 0, function* () { }));
 exports.UserController = {
     createStudent,
