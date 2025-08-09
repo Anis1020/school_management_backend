@@ -1,4 +1,4 @@
-import catchAsync from "../../utiles/catchAsync";
+import catchAsync from "../../utils/catchAsync";
 
 const createStudent = catchAsync(async () => {});
 const createFaculty = catchAsync(async () => {});
